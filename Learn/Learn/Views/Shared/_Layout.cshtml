@@ -1,0 +1,364 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Learn</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Learn.styles.css" asp-append-version="true" />
+    <link href="~/css/tailwind.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        /* Sidebar and Dashboard Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f7fa;
+            color: #333;
+        }
+
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+            .sidebar.collapsed {
+                width: 70px;
+            }
+
+                .sidebar.collapsed .sidebar-text,
+                .sidebar.collapsed h2 {
+                    display: none;
+                }
+
+                .sidebar.collapsed .nav-link {
+                    justify-content: center;
+                }
+
+                .sidebar.collapsed .submenu {
+                    display: none;
+                }
+
+                .sidebar.collapsed .has-submenu::after {
+                    display: none;
+                }
+
+            .sidebar h2 {
+                padding: 0 20px;
+                margin-bottom: 30px;
+                transition: all 0.3s ease;
+            }
+
+            .sidebar ul {
+                list-style: none;
+                padding: 0 20px;
+                transition: all 0.3s ease;
+            }
+
+            .sidebar.collapsed ul {
+                padding: 0 10px;
+            }
+
+            .sidebar li {
+                margin-bottom: 15px;
+                position: relative;
+            }
+
+            .sidebar a {
+                color: white;
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 8px 10px;
+                border-radius: 4px;
+                transition: all 0.3s ease;
+            }
+
+                .sidebar a:hover, .sidebar a.active {
+                    background: #3498db;
+                }
+
+            .sidebar .submenu {
+                list-style: none;
+                margin-left: 20px;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+
+                .sidebar .submenu.show {
+                    max-height: 500px; /* Adjust based on your content */
+                }
+
+        .has-submenu {
+            position: relative;
+        }
+
+            .has-submenu::after {
+                content: '\f078';
+                font-family: 'Font Awesome 6 Free';
+                font-weight: 900;
+                position: absolute;
+                right: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 12px;
+                transition: all 0.3s ease;
+            }
+
+            .has-submenu.open::after {
+                transform: translateY(-50%) rotate(180deg);
+            }
+
+        .toggle-btn {
+            position: absolute;
+            right: -15px;
+            top: 20px;
+            background: #2c3e50;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+            .toggle-btn:hover {
+                background: #3498db;
+            }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar.collapsed + .main-content {
+            margin-left: 70px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            width: 300px;
+            border: 1px solid #ddd;
+        }
+
+            .search-bar input {
+                border: none;
+                outline: none;
+                width: 100%;
+                margin-left: 10px;
+            }
+
+        .user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+            .user img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: #ddd;
+            }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <button class="toggle-btn" id="toggleBtn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <h2 class="sidebar-text">LearnHub</h2>
+            <ul>
+                <li>
+                    <a class="nav-link" href="/Home/Index">
+                        <i class="fas fa-book"></i>
+                        <span class="sidebar-text">Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="has-submenu">
+                    <a class="nav-link submenu-toggle" href="#">
+                        <i class="fas fa-book"></i>
+                        <span class="sidebar-text">My Courses</span>
+                    </a>
+                    <ul class="submenu">
+                        <li>
+                            <a class="nav-link" href="/Course/Addcourse">
+                                <i class="fas fa-plus"></i>
+                                <span class="sidebar-text">Add Course</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="/Course/Viewcourse">
+                                <i class="fas fa-eye"></i>
+                                <span class="sidebar-text">View Course</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-tasks"></i>
+                        <span class="sidebar-text">Assignments</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-chart-bar"></i>
+                        <span class="sidebar-text">Grades</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-cog"></i>
+                        <span class="sidebar-text">Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="user">
+                    <img src="https://via.placeholder.com/40" alt="User">
+                    <span>Welcome, User</span>
+                </div>
+            </div>
+
+            <div class="container">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+
+            <footer class="border-top footer text-muted">
+                <div class="container">
+                    &copy; 2025 - Learn - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="~/lib/Knockout.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.getElementById('toggleBtn');
+
+            // Sidebar collapse/expand toggle
+            toggleBtn.addEventListener('click', function() {
+                sidebar.classList.toggle('collapsed');
+
+                // Change the icon based on sidebar state
+                const icon = toggleBtn.querySelector('i');
+                if (sidebar.classList.contains('collapsed')) {
+                    icon.classList.remove('fa-chevron-left');
+                    icon.classList.add('fa-chevron-right');
+                } else {
+                    icon.classList.remove('fa-chevron-right');
+                    icon.classList.add('fa-chevron-left');
+                }
+            });
+
+            // Submenu toggle functionality
+            const submenuToggles = document.querySelectorAll('.submenu-toggle');
+            submenuToggles.forEach(toggle => {
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const parentLi = this.closest('.has-submenu');
+                    const submenu = parentLi.querySelector('.submenu');
+
+                    // Toggle the submenu
+                    submenu.classList.toggle('show');
+                    parentLi.classList.toggle('open');
+
+                    // Close other open submenus if needed
+                    if (!parentLi.classList.contains('open')) {
+                        document.querySelectorAll('.has-submenu.open').forEach(openItem => {
+                            if (openItem !== parentLi) {
+                                openItem.classList.remove('open');
+                                openItem.querySelector('.submenu').classList.remove('show');
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Optional: Save sidebar state in localStorage
+            if (localStorage.getItem('sidebarCollapsed') === 'true') {
+                sidebar.classList.add('collapsed');
+                const icon = toggleBtn.querySelector('i');
+                icon.classList.remove('fa-chevron-left');
+                icon.classList.add('fa-chevron-right');
+            }
+
+            toggleBtn.addEventListener('click', function() {
+                const isCollapsed = sidebar.classList.contains('collapsed');
+                localStorage.setItem('sidebarCollapsed', isCollapsed);
+            });
+
+            // Optional: Save open submenu state
+            document.querySelectorAll('.has-submenu').forEach(item => {
+                const submenuKey = item.querySelector('.sidebar-text').textContent.trim();
+                if (localStorage.getItem(submenuKey) === 'open') {
+                    item.classList.add('open');
+                    item.querySelector('.submenu').classList.add('show');
+                }
+
+                item.addEventListener('click', function() {
+                    if (this.classList.contains('open')) {
+                        localStorage.setItem(submenuKey, 'open');
+                    } else {
+                        localStorage.removeItem(submenuKey);
+                    }
+                });
+            });
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

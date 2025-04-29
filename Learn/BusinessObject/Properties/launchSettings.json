@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "BusinessObject": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
