@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Course>
+
+@{
+    ViewData["Title"] = "Courses";
+    var isInstructor = User.IsInRole("Instructor");
+    var isUser = User.IsInRole("User");
+}
+<h2>Courses</h2>
+
+@if (isInstructor)
+{
+    <p>
+        <a asp-action="Create">Create New Course</a>
+    </p>
+}
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">@TempData["Message"]</div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Duration</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.Description</td>
+                <td>@item.Category</td>
+                <td>@item.DurationInHours hours</td>
+               
+                <td>
+                    @if (isInstructor)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.CourseId">Edit</a> @:|
+                        <a asp-action="Delete" asp-route-id="@item.CourseId">Delete</a>
+                    }
+                    else if (isUser)
+                    {
+                        <a asp-action="Enroll" asp-route-id="@item.CourseId">Enroll</a> @:|
+                        
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (isUser)
+{
+    <div>
+        <a asp-action="MyCourses">View My Enrolled Courses</a>
+    </div>
+}

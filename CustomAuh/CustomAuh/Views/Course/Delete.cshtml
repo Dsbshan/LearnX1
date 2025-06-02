@@ -1,0 +1,82 @@
+﻿@model DeleteCourseViewModel
+@{
+    ViewData["Title"] = "Delete Course";
+}
+
+<div class="container mt-4">
+    <div class="card border-danger">
+        <div class="card-header bg-danger text-white">
+            <h2 class="h5 mb-0">
+                <i class="fas fa-trash-alt mr-2"></i>Delete Course: @Model.Title
+            </h2>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-danger">
+                <h4 class="alert-heading">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>Warning!
+                </h4>
+                <p>This action will permanently delete the course and all associated data.</p>
+            </div>
+
+            <div class="row">
+                <!-- Course Details Column -->
+                <div class="col-md-6">
+                    <h4 class="h5 text-muted border-bottom pb-2">Course Information</h4>
+                    <dl class="row">
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Title)</dt>
+                        <dd class="col-sm-8">@Model.Title</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Description)</dt>
+                        <dd class="col-sm-8">@Model.Description</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Category)</dt>
+                        <dd class="col-sm-8">@Model.Category</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.DurationInHours)</dt>
+                        <dd class="col-sm-8">@Model.DurationInHours hours</dd>
+                    </dl>
+                </div>
+
+                <!-- Metadata Column -->
+                <div class="col-md-6">
+                    <h4 class="h5 text-muted border-bottom pb-2">Course Metadata</h4>
+                    <dl class="row">
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.CreatedBy)</dt>
+                        <dd class="col-sm-8">@Model.CreatedBy</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.CreatedDate)</dt>
+                        <dd class="col-sm-8">@Model.CreatedDate.ToString("yyyy-MM-dd HH:mm")</dd>
+
+                        @if (Model.LastModifiedDate.HasValue)
+                        {
+                            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.LastModifiedDate)</dt>
+                            <dd class="col-sm-8">@Model.LastModifiedDate.Value.ToString("yyyy-MM-dd HH:mm")</dd>
+                        }
+
+                        
+                    </dl>
+                </div>
+            </div>
+
+            <!-- Warning Sections -->
+            
+
+                
+
+            <!-- Delete Form -->
+            <form asp-action="Delete" class="mt-4">
+                <input type="hidden" asp-for="CourseId" />
+                <div class="form-group">
+                    <button type="submit" class="btn btn-danger btn-lg">
+                        <i class="fas fa-trash-alt mr-2"></i>Confirm Permanent Deletion
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-lg ml-2">
+                        <i class="fas fa-times mr-2"></i>Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

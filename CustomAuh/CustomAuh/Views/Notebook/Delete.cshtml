@@ -1,0 +1,39 @@
+﻿@using Core.Models
+@model NotebookEntryViewModel
+
+@{
+    ViewData["Title"] = "Delete Entry";
+}
+
+<div class="container mt-4">
+    <h1>@ViewData["Title"]</h1>
+
+    <h3>Are you sure you want to delete this entry?</h3>
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5>@Model.EntryDate.ToString("D")</h5>
+            @if (Model.IsImportant)
+            {
+                <span class="badge badge-warning">Important</span>
+            }
+        </div>
+        <div class="card-body">
+            <p class="card-text">@Model.Content</p>
+            @if (!string.IsNullOrEmpty(Model.Tags))
+            {
+                <div class="mt-2">
+                    @foreach (var tag in Model.Tags.Split(','))
+                    {
+                        <span class="badge badge-info mr-1">@tag.Trim()</span>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+
+    <form asp-action="Delete" class="mt-4">
+        <input type="hidden" asp-for="EntryId" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </form>
+</div>

@@ -1,0 +1,68 @@
+﻿@using Core.Models
+@model IEnumerable<NotebookEntry>
+
+@{
+    ViewData["Title"] = "My Notebook Entries";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>@ViewData["Title"]</h1>
+        <a asp-action="Create" class="btn btn-primary">+ New Entry</a>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <form asp-action="Search" method="get" class="form-inline">
+                <div class="input-group">
+                    <input type="text" name="query" class="form-control" placeholder="Search entries...">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-outline-secondary">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6 text-right">
+            <form asp-action="DailyReview" method="get" class="form-inline float-right">
+                <div class="input-group">
+                    <input type="date" name="date" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-outline-secondary">View Day</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="list-group">
+        @foreach (var item in Model)
+        {
+            <div class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">
+                        @item.EntryDate.ToString("D")
+                        @if (item.IsImportant)
+                        {
+                            <span class="badge badge-warning ml-2">Important</span>
+                        }
+                    </h5>
+                    <small>@item.CreatedAt.ToString("g")</small>
+                </div>
+                <p class="mb-1">@item.Content</p>
+                @if (!string.IsNullOrEmpty(item.Tags))
+                {
+                    <div class="mt-2">
+                        @foreach (var tag in item.Tags.Split(','))
+                        {
+                            <span class="badge badge-info mr-1">@tag.Trim()</span>
+                        }
+                    </div>
+                }
+                <div class="mt-2">
+                    <a asp-action="Edit" asp-route-id="@item.EntryId" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.EntryId" class="btn btn-sm btn-outline-danger">Delete</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

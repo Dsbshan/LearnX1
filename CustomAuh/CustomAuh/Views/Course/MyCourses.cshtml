@@ -1,0 +1,26 @@
+﻿@model IEnumerable<CustomAuh.Models.Course>  // Change this line
+
+<h2>My Courses</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Course Title</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Duration (Hours)</th>
+            <!-- Remove Enrollment Date since Course model doesn't have it -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.Description</td>
+                <td>@item.Category</td>
+                <td>@item.DurationInHours</td>
+            </tr>
+        }
+    </tbody>
+</table>

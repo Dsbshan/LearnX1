@@ -1,0 +1,203 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TechCity learn</title>
+
+    <!-- Font & Icon Integration -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Core CSS -->
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+
+    <style>
+        :root {
+            --primary-color: #6366f1; /* Modern indigo */
+            --secondary-color: #8b5cf6; /* Modern purple */
+            --accent-color: #ec4899; /* Modern pink */
+            --light-bg: #f9fafb; /* Very light gray */
+            --dark-text: #1f2937; /* Dark gray */
+            --light-text: #6b7280; /* Medium gray */
+            --navbar-bg: #ffffff; /* Pure white */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-text);
+            background-color: var(--light-bg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background-color: var(--navbar-bg);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            padding: 0.8rem 0;
+            border: none !important;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color) !important;
+        }
+
+        .nav-link {
+            color: var(--dark-text) !important;
+            transition: all 0.3s ease;
+            margin: 0 5px;
+            border-radius: 8px;
+            padding: 8px 15px !important;
+            font-weight: 500;
+        }
+
+            .nav-link:hover {
+                color: var(--primary-color) !important;
+                background-color: rgba(99, 102, 241, 0.1);
+            }
+
+            .nav-link i {
+                color: var(--light-text);
+                margin-right: 8px;
+            }
+
+            .nav-link:hover i {
+                color: var(--primary-color);
+            }
+
+        main {
+            flex: 1;
+            padding: 2rem 0;
+        }
+
+        footer {
+            background-color: var(--dark-text);
+            color: white;
+            padding: 1.5rem 0;
+            margin-top: auto;
+        }
+
+        .auth-btn {
+            background-color: var(--primary-color);
+            color: white !important;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            padding: 8px 20px !important;
+            margin-left: 10px;
+        }
+
+            .auth-btn:hover {
+                background-color: var(--secondary-color);
+                color: white !important;
+                transform: translateY(-2px);
+            }
+
+            .auth-btn i {
+                color: white !important;
+            }
+
+        .navbar-toggler {
+            border: none;
+            padding: 0.5rem;
+        }
+
+            .navbar-toggler:focus {
+                box-shadow: none;
+            }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2899, 102, 241, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container">
+                <a class="navbar-brand" href="/">
+                    <i class="fas fa-lock-open me-2"></i>
+                   Tech City Learn
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">
+                                <i class="fas fa-home me-1"></i> Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Notebook/Note">
+                                <i class="fas fa-book me-1"></i> Notes
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav">
+                        @if (Context.Session.GetString("Email") != null)
+                        {
+                            <li class="nav-item">
+                                <span class="nav-link">
+                                    <i class="fas fa-user-circle me-1"></i>
+                                    @Context.Session.GetString("Email")
+                                </span>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link auth-btn" href="/Account/Logout">
+                                    <i class="fas fa-sign-out-alt me-1"></i> Logout
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link auth-btn me-2" href="/Account/Login">
+                                    <i class="fas fa-sign-in-alt me-1"></i> Login
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link auth-btn" href="/Account/Register">
+                                    <i class="fas fa-user-plus me-1"></i> Register
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        @RenderBody()
+    </main>
+
+    <footer>
+        <div class="container text-center">
+            <div class="mb-3">
+                <a href="#" class="text-white mx-3"><i class="fab fa-github"></i></a>
+                <a href="#" class="text-white mx-3"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <p class="mb-0">&copy; @DateTime.Now.Year - My Auth App</p>
+        </div>
+    </footer>
+
+    <!-- Core JavaScript -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/Knockout.js"></script>
+    <script src="~/js/Connector.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/iziToast/dist/js/iziToast.min.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

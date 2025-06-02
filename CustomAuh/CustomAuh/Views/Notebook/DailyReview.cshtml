@@ -1,0 +1,49 @@
+﻿@using Core.Models
+@model IEnumerable<NotebookEntry>
+
+@{
+    ViewData["Title"] = "Daily Review";
+    var currentDate = Model.FirstOrDefault()?.EntryDate ?? DateTime.Today;
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>@ViewData["Title"] - @currentDate.ToString("D")</h1>
+        <a asp-action="Create" asp-route-date="@currentDate.ToString("yyyy-MM-dd")" class="btn btn-primary">+ Add Entry</a>
+    </div>
+
+    <div class="list-group">
+        @foreach (var item in Model)
+        {
+            <div class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">
+                        @if (item.IsImportant)
+                        {
+                            <span class="badge badge-warning mr-2">Important</span>
+                        }
+                        @item.CreatedAt.ToString("t")
+                    </h5>
+                </div>
+                <p class="mb-1">@item.Content</p>
+                @if (!string.IsNullOrEmpty(item.Tags))
+                {
+                    <div class="mt-2">
+                        @foreach (var tag in item.Tags.Split(','))
+                        {
+                            <span class="badge badge-info mr-1">@tag.Trim()</span>
+                        }
+                    </div>
+                }
+                <div class="mt-2">
+                    <a asp-action="Edit" asp-route-id="@item.EntryId" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.EntryId" class="btn btn-sm btn-outline-danger">Delete</a>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="Index" class="btn btn-secondary">Back to All Entries</a>
+    </div>
+</div>

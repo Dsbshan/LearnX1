@@ -1,0 +1,29 @@
+﻿@model CustomAuh.Models.EnrollmentViewModel
+
+<h2>Enroll in Course</h2>
+
+<div>
+    <h4>@Model.CourseTitle</h4>
+    <p>Instructor: @Model.InstructorName</p>
+    <hr />
+
+    @if (Model.IsEnrolled)
+    {
+        <div class="alert alert-info">
+            You are already enrolled in this course.
+        </div>
+        <a asp-action="MyCourses" class="btn btn-primary">View My Courses</a>
+    }
+    else
+    {
+        <form asp-action="Enroll">
+            <input type="hidden" asp-for="CourseId" />
+            <input type="hidden" asp-for="CourseTitle" />
+            <input type="hidden" asp-for="InstructorName" />
+
+            <p>Are you sure you want to enroll in this course?</p>
+            <button type="submit" class="btn btn-success">Confirm Enrollment</button>
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </form>
+    }
+</div>
