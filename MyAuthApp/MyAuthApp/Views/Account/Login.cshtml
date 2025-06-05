@@ -1,26 +1,32 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-xl-4 col-md-6 col-sm-8">
-            <div class="card mt-5">
-                <div class="card-header text-center">
-                    <h2>Login</h2>
+
+<!-- Trigger Button (You can place this in your layout or a navbar) -->
+<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+    Login
+</button>
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mb-3">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" class="form-control" data-bind="value: email">
                 </div>
-                <div class="card-body">
-                    <div class="form-group mb-3">
-                        <label for="email">Email</label>
-                        <input type="text" id="email" class="form-control" data-bind="value: email">
-                    </div>
-                    <div class="form-group mb-4">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" class="form-control" data-bind="value: password">
-                    </div>
-                    <div class="d-grid">
-                        <button class="btn btn-primary" data-bind="click: login">Login</button>
-                    </div>
+                <div class="form-group mb-3">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" data-bind="value: password">
                 </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary w-100" data-bind="click: login">Login</button>
             </div>
         </div>
     </div>

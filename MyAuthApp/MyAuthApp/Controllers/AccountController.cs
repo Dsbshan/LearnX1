@@ -36,13 +36,20 @@ public class AccountController : BaseController
         try
         {
             var user = _userRepo.Login(usrl);
+
             if (user == null)
-                throw new Exception("Invalid email or password.");
+            {
+                // Return error directly without throwing exception
+                return ReturnError(new Exception("Invalid credentials"), "002", ModelState);
+            }
+
             HttpContext.Session.SetString("Email", user.Email);
+
             var claims = new List<Claim>
         {
             new Claim(ClaimTypes.Name, user.Email),
         };
+
             var claimsIdentity = new ClaimsIdentity(
                 claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -54,6 +61,7 @@ public class AccountController : BaseController
         }
         catch (Exception ex)
         {
+            // Handle other exceptions (e.g., DB errors)
             return ReturnError(ex, "002", ModelState);
         }
     }
@@ -90,10 +98,6 @@ public class AccountController : BaseController
         }
     }
     
-
-
-
-
 
     public async Task<ActionResult> Logout()
     {

@@ -1,0 +1,91 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h2>Courses</h2>
+    </div>
+    <div class="card-body">
+
+        <!-- Course Type -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="font-weight-bold">Course Type</label>
+                    <select class="form-control" id="ModuleListTypeName"
+                            data-bind="options: moduleListTypes,
+                                       optionsText: 'moduleListTypeName',
+                                       optionsValue: 'moduleListTypeId',
+                                       value: moduleListTypeId,
+                                       optionsCaption: 'Choose The course'">
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course Title -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="font-weight-bold">Course Title</label>
+                    <input type="text" class="form-control" id="courseTitle"
+                           data-bind="value: courseTitle" placeholder="Enter course">
+                </div>
+            </div>
+        </div>
+
+        <!-- Course Description -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="font-weight-bold">Course Description</label>
+                    <input type="text" class="form-control" id="courseDescription"
+                           data-bind="value: courseDescription" placeholder="Enter description">
+                </div>
+            </div>
+        </div>
+
+        <!-- Course Duration -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="font-weight-bold">Course Duration</label>
+                    <input type="number" class="form-control" id="courseDuration"
+                           data-bind="value: courseDuration" placeholder="Enter duration">
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload Screenshot -->
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label class="font-weight-bold">Upload Screenshot</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="fileUpload"
+                               data-bind="event: { change: handleFileUpload }">
+                        <label class="custom-file-label" for="fileUpload">Choose file</label>
+                    </div>
+                    <small class="text-muted" data-bind="visible: uploadingAttachment">
+                        Uploading file, please wait...
+                    </small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Record Button -->
+        <div class="row">
+            <div class="col-md-3">
+                <button type="button" class="btn btn-primary"
+                        data-bind="click: addRecord, enable: attachmentUrl">
+                    Add Record
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/Card.js"></script>
+}

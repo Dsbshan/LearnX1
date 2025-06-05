@@ -17,7 +17,8 @@ function Login() {
 
         displayLoader();
         connector.Post("/Account/Login", data, function (response) {
-            window.location.href = "/Home/Index";
+            $('#loginModal').modal('hide'); // Hide modal after login
+            window.location.href = "/Dashboard/Dashboard";
             hideLoader();
         });
     };

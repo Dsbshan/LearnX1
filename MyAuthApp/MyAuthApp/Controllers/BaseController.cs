@@ -15,7 +15,7 @@ namespace MyAuthApp.Controllers
             return res;
         }
 
-        public Response ReturnError(Exception ex)
+        public Response ReturnError(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary modelState, Exception ex)
         {
             Response res = new Response();
             res.Result = null;

@@ -1,1 +1,21 @@
-﻿HI
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="card-container" data-bind="foreach: cards">
+    <div class="card">
+        <h3 data-bind="text: title"></h3>
+        <p data-bind="text: content"></p>
+    </div>
+</div>
+
+<button data-bind="click: addCard">Add Card</button>
+
+
+
+
+@section Scripts {
+
+    <script src="~/js/Card.js"></script>
+
+}

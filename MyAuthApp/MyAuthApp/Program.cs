@@ -23,8 +23,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     });
 
-// Register repositories
+
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IMasterDataRepositoy, MasterDataRepository>();
 builder.Services.AddScoped<IDiaryRepository, DiaryRepository>();
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
